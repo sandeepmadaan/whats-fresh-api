@@ -35,7 +35,7 @@ class ProductForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'required': 'true'}),
             'market_price': forms.TextInput(attrs={'required': 'true'})
         }
-        exclude = ('preparations',)
+        exclude = ('preparations','image')
 
 
 class StoryForm(forms.ModelForm):
