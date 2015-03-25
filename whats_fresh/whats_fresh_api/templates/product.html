@@ -17,6 +17,7 @@
 
 {% block content %}
 {% load staticfiles %}
+
 <form class='form' action="{{ post_url }}" method="post">
     {% if product_form.errors or errors %}
     <div class="error">
@@ -54,8 +55,38 @@
     {{ product_form.market_price }}
     <p class="field_text" >Link:</p>
     {{ product_form.link }}
-    <p class="field_text" >Image:</p>
-    {{ product_form.image }}
+    <p>Image:</p>
+	<script type="text/javascript" src="{% static 'jquery.js'%}"></script>
+	<style type="text/css">
+       
+ "
+</style>
+	<div class="image">
+    <select id="demoBasic" class='img_select'>
+	{% for image in img_dict.images %}
+                            <option  value="{{image.id}}" data-imagesrc="{{MEDIA_URL}}/{{image.image}}" data-description="Description with Facebook">{{image.name}}</option>
+                            
+	{% endfor %}
+                        </select>
+	</div>
+	<input class='image' name="image_id" type="hidden" />
+	<script type="text/javascript">
+        $(document).ready(function () {
+           
+            $('#demoBasic').ddslick({
+              
+                selectText: "Select your Image"
+				
+            });
+			
+			
+        });
+		
+    </script>
+    <!----------->
+    <!---Script Reference--->
+    <!----------->
+    <script type="text/javascript" src="{% static 'jquery_002.js' %}"></script>
     <p class="field_text">Story:</p>
     {{ product_form.story }}
     <input class="preparations" name="preparations" type="hidden" />
@@ -78,7 +109,7 @@
 
     <input class='preparation' name="preparation_ids" type="hidden" />
     <div class="buttons">
-        <button type="submit" onclick="setPreparationField();"/>Save</button>
+        <button type="submit" onclick="setPreparationField();setImage();"/>Save</button>
     </div>
 </form>
 <!-- The template div used by appendPreparation() -->
@@ -100,7 +131,7 @@
     var preparation_options = {{ json_preparations|safe }};
 
     number_of_preparations = 0;
-
+	
     function deletePreparation(element)
     {
         $( element ).parent().css("display", "none");
@@ -145,5 +176,11 @@
 
         $('input[name="preparation_ids"]').val(preparation_ids);
     }
+	function setImage()
+    {
+		var im = $(".dd-selected-value").val();
+        $('input[name="image_id"]').val(im);
+    }
+	 
 </script>
 {% endblock footer %}
