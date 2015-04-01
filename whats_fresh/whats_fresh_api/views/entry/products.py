@@ -9,7 +9,7 @@ from django.conf import settings
 from django.forms.models import save_instance
 
 from whats_fresh.whats_fresh_api.models import (Product, Preparation,
-                                                ProductPreparation)
+                                                ProductPreparation, Image)
 from whats_fresh.whats_fresh_api.forms import ProductForm
 from whats_fresh.whats_fresh_api.functions import group_required
 
@@ -42,6 +42,7 @@ def product(request, id=None):
         errors = []
 
         try:
+            imag = post_data['image_id']
             if len(post_data['preparation_ids']) == 0:
                 errors.append("You must choose at least one preparation.")
                 preparations = []
@@ -76,6 +77,9 @@ def product(request, id=None):
                         product=product,
                         preparation=Preparation.objects.get(
                             id=preparation))
+                imm = Image.objects.get(id =imag)
+                product.image=imm
+                product.save()
                 save_instance(product_form, product)
             else:
                 product = Product.objects.create(**product_form.cleaned_data)
@@ -84,6 +88,9 @@ def product(request, id=None):
                         product=product,
                         preparation=Preparation.objects.get(
                             id=preparation))
+                imm = Image.objects.get(id =imag)
+                product.image=imm
+               
                 product.save()
             return HttpResponseRedirect(
                 "%s?saved=true" % reverse('entry-list-products'))
@@ -114,11 +121,19 @@ def product(request, id=None):
         existing_preparations = []
 
     data = {'preparations': []}
+    img = {'images': []}
 
     for preparation in Preparation.objects.all():
         data['preparations'].append({
             'id': preparation.id,
             'name': preparation.name
+        })
+
+    for image in Image.objects.all():
+        img['images'].append({
+            'id': image.id,
+            'name': image.name,
+            'image':image.image
         })
 
     json_preparations = json.dumps(data)
@@ -129,6 +144,7 @@ def product(request, id=None):
             {'url': reverse('entry-list-products'), 'name': 'Products'}],
         'json_preparations': json_preparations,
         'preparation_dict': data,
+        'img_dict':img,
         'existing_preparations': existing_preparations,
         'parent_text': 'Product List',
         'message': message,
