@@ -59,34 +59,27 @@
 	<script type="text/javascript" src="{% static 'jquery.js'%}"></script>
 	<style type="text/css">
        
- "
+ 
 </style>
 	<div class="image">
-    <select id="demoBasic" class='img_select'>
+    	<select id="demoBasic" class='img_select'>
 	{% for image in img_dict.images %}
-                            <option  value="{{image.id}}" data-imagesrc="{{MEDIA_URL}}/{{image.image}}" data-description="Description with Facebook">{{image.name}}</option>
-                            
-	{% endfor %}
-                        </select>
+		<option  value="{{image.id}}" data-imagesrc="{{MEDIA_URL}}/{{image.image}}" >{{image.name}}</option>
+    {% endfor %}
+        </select>
 	</div>
 	<input class='image' name="image_id" type="hidden" />
 	<script type="text/javascript">
         $(document).ready(function () {
-           
-            $('#demoBasic').ddslick({
-              
-                selectText: "Select your Image"
-				
-            });
-			
-			
-        });
+           $('#demoBasic').ddslick({
+            selectText: "Select your Image"
+		});
+	});
 		
     </script>
-    <!----------->
-    <!---Script Reference--->
-    <!----------->
+    
     <script type="text/javascript" src="{% static 'jquery_002.js' %}"></script>
+
     <p class="field_text">Story:</p>
     {{ product_form.story }}
     <input class="preparations" name="preparations" type="hidden" />
