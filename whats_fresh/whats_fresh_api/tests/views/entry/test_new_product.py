@@ -52,8 +52,9 @@ class NewProductTestCase(TestCase):
         fields = {'name': 'input', 'variety': 'input', 'story': 'select',
                   'alt_name': 'input', 'description': 'textarea',
                   'origin': 'input', 'season': 'input', 'available': 'select',
-                  'market_price': 'input', 'link': 'input',
-                  'image': 'select'}
+                  'market_price': 'input', 'link': 'input'}
+        # 'image': 'select'}
+
         form = response.context['product_form']
 
         for field in fields:
@@ -96,9 +97,10 @@ class NewProductTestCase(TestCase):
         # the client/web page.
         new_product['available'] = None
         new_product['story'] = Story.objects.get(id=new_product['story'])
-        new_product['image'] = Image.objects.get(id=new_product['image'])
+        # new_product['image'] = Image.objects.get(id=new_product['image'])
 
         del new_product['preparation_ids']
+        del new_product['image']
 
         product = Product.objects.all()[0]
         for field in new_product:

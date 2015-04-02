@@ -77,8 +77,8 @@ def product(request, id=None):
                         product=product,
                         preparation=Preparation.objects.get(
                             id=preparation))
-                imm = Image.objects.get(id =imag)
-                product.image=imm
+                imm = Image.objects.get(id=imag)
+                product.image = imm
                 product.save()
                 save_instance(product_form, product)
             else:
@@ -88,9 +88,8 @@ def product(request, id=None):
                         product=product,
                         preparation=Preparation.objects.get(
                             id=preparation))
-                imm = Image.objects.get(id =imag)
-                product.image=imm
-               
+                imm = Image.objects.get(id=imag)
+                product.image = imm
                 product.save()
             return HttpResponseRedirect(
                 "%s?saved=true" % reverse('entry-list-products'))
@@ -133,7 +132,7 @@ def product(request, id=None):
         img['images'].append({
             'id': image.id,
             'name': image.name,
-            'image':image.image
+            'image': image.image
         })
 
     json_preparations = json.dumps(data)
@@ -144,7 +143,7 @@ def product(request, id=None):
             {'url': reverse('entry-list-products'), 'name': 'Products'}],
         'json_preparations': json_preparations,
         'preparation_dict': data,
-        'img_dict':img,
+        'img_dict': img,
         'existing_preparations': existing_preparations,
         'parent_text': 'Product List',
         'message': message,
