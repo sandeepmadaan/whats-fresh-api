@@ -42,7 +42,7 @@ def product(request, id=None):
         errors = []
 
         try:
-            imag = post_data['image_id']
+            imag = post_data['image']
             if len(post_data['preparation_ids']) == 0:
                 errors.append("You must choose at least one preparation.")
                 preparations = []
@@ -102,7 +102,7 @@ def product(request, id=None):
         title = "Edit {0}".format(product.name)
         post_url = reverse('edit-product', kwargs={'id': id})
         product_form = ProductForm(instance=product)
-
+        existing_image = product.image
         existing_preparations = product.preparations.all()
 
         if request.GET.get('success') == 'true':
@@ -113,11 +113,13 @@ def product(request, id=None):
         post_url = reverse('new-product')
         title = "New Product"
         existing_preparations = []
+        existing_image = []
 
     else:
         post_url = reverse('new-product')
         title = "New Product"
         existing_preparations = []
+        existing_image = []
 
     data = {'preparations': []}
     img = {'images': []}
@@ -145,6 +147,7 @@ def product(request, id=None):
         'preparation_dict': data,
         'img_dict': img,
         'existing_preparations': existing_preparations,
+        'existing_image': existing_image,
         'parent_text': 'Product List',
         'message': message,
         'title': title,

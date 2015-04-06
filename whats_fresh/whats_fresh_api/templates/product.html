@@ -64,11 +64,20 @@
 	<div class="image">
     	<select id="demoBasic" class='img_select'>
 	{% for image in img_dict.images %}
+		{% if existing_image %}
+			
+				{% if existing_image.id == image.id %}
+			<option value ="{{existing_image.id}}" data-imagesrc="{{MEDIA_URL}}/{{existing_image.image}}" selected>{{existing_image.name}}</option>
 		<option  value="{{image.id}}" data-imagesrc="{{MEDIA_URL}}/{{image.image}}" >{{image.name}}</option>
+				{% endif %}
+			
+		{% else %}
+		<option  value="{{image.id}}" data-imagesrc="{{MEDIA_URL}}/{{image.image}}" >{{image.name}}</option>
+		{% endif %}
     {% endfor %}
         </select>
 	</div>
-	<input class='image' name="image_id" type="hidden" />
+	<input class='image' name="image" type="hidden" />
 	<script type="text/javascript">
         $(document).ready(function () {
            $('#demoBasic').ddslick({
@@ -172,7 +181,7 @@
 	function setImage()
     {
 		var im = $(".dd-selected-value").val();
-        $('input[name="image_id"]').val(im);
+        $('input[name="image"]').val(im);
     }
 	 
 </script>
