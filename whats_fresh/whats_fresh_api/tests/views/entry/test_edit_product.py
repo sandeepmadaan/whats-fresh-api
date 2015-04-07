@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
-from whats_fresh.whats_fresh_api.models import Product, Story
+from whats_fresh.whats_fresh_api.models import Product, Image, Story
 from django.contrib.auth.models import User, Group
 
 
@@ -63,10 +63,9 @@ class EditProductTestCase(TestCase):
         # the client/web page.
         new_product['available'] = None
         new_product['story'] = Story.objects.get(id=new_product['story'])
-        # new_product['image'] = Image.objects.get(id=new_product['image'])
+        new_product['image'] = Image.objects.get(id=new_product['image'])
 
         del new_product['preparation_ids']
-        del new_product['image']
 
         product = Product.objects.get(id=1)
         for field in new_product:
@@ -94,7 +93,7 @@ class EditProductTestCase(TestCase):
             "market_price": "$32.64 per season",
             "link": "http://www.amazon.com/\
 Star-Trek-Deep-Space-Nine/dp/B00008KA57/",
-            # "image": 2,
+            "image": 2,
             "story": 2
         }
         form = response.context['product_form']

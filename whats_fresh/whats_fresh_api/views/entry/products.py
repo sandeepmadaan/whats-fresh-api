@@ -42,7 +42,6 @@ def product(request, id=None):
         errors = []
 
         try:
-            imag = post_data['image']
             if len(post_data['preparation_ids']) == 0:
                 errors.append("You must choose at least one preparation.")
                 preparations = []
@@ -77,8 +76,6 @@ def product(request, id=None):
                         product=product,
                         preparation=Preparation.objects.get(
                             id=preparation))
-                imm = Image.objects.get(id=imag)
-                product.image = imm
                 product.save()
                 save_instance(product_form, product)
             else:
@@ -88,8 +85,6 @@ def product(request, id=None):
                         product=product,
                         preparation=Preparation.objects.get(
                             id=preparation))
-                imm = Image.objects.get(id=imag)
-                product.image = imm
                 product.save()
             return HttpResponseRedirect(
                 "%s?saved=true" % reverse('entry-list-products'))
