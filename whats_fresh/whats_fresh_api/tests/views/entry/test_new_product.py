@@ -54,7 +54,6 @@ class NewProductTestCase(TestCase):
                   'origin': 'input', 'season': 'input', 'available': 'select',
                   'market_price': 'input', 'link': 'input',
                   'image': 'select'}
-
         form = response.context['product_form']
 
         for field in fields:
